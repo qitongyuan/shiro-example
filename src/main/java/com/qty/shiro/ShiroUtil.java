@@ -53,11 +53,27 @@ public class ShiroUtil {
         return user;
     }
 
-    public static void main(String[] args) {
-        String password="123456";
-        String salt= RandomStringUtils.randomAlphanumeric(20);
-        System.out.println("盐值 "+salt);
-        System.out.println("密码2 "+ShiroUtil.sha256(password, salt));
-        System.out.println("密码2 "+ShiroUtil.sha256(password, "1TsRU8nItmj4HvujFlxY"));
+    //根据token获取当前用户
+    public User getUserInfo(String accessToken){
+        Claims claims= null;
+        try {
+            claims = JwtRedisUtil.validateJWT(accessToken);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (claims==null){
+            return null;
+        }
+        String userInfo= claims.getSubject();
+        User user= JSONObject.parseObject(userInfo,User.class);
+        return user;
     }
+
+//    public static void main(String[] args) {
+//        String password="123456";
+//        String salt= RandomStringUtils.randomAlphanumeric(20);
+//        System.out.println("盐值 "+salt);
+//        System.out.println("密码2 "+ShiroUtil.sha256(password, salt));
+//        System.out.println("密码2 "+ShiroUtil.sha256(password, "1TsRU8nItmj4HvujFlxY"));
+//    }
 }
