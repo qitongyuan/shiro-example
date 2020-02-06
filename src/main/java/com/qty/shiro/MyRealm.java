@@ -5,6 +5,7 @@ package com.qty.shiro;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.qty.entity.User;
+import com.qty.mapper.UserMapper;
 import com.qty.util.ConstantParameter;
 import com.qty.util.JwtRedisUtil;
 import io.jsonwebtoken.Claims;
@@ -23,6 +24,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -40,6 +42,9 @@ public class MyRealm extends AuthorizingRealm {
 
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    @Resource
+    private UserMapper userMapper;
 
 
     /**
@@ -65,7 +70,7 @@ public class MyRealm extends AuthorizingRealm {
         //查询权限集合赋给shiro
         List<String>perms= Lists.newLinkedList();
         //TODO 在数据库中关联查询该用户的权限集合
-
+        perms=userMapper.queryAllPerms(user.getUserId());
         //对于每一个授权编码进行 , 的解析拆分
         Set<String> stringPermissions= Sets.newHashSet();
         if (perms!=null && !perms.isEmpty()){

@@ -23,7 +23,7 @@ spring:
     timeout: 1000
     database: 0
 mybatis-plus:
-  type-aliases-package: com.blog.entity
+  type-aliases-package: com.qty.entity
   mapper-locations: classpath:mappers/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
