@@ -69,7 +69,7 @@ public class MyRealm extends AuthorizingRealm {
         User user=new ShiroUtil().getUserInfo(accessToken);
         //查询权限集合赋给shiro
         List<String>perms= Lists.newLinkedList();
-        //TODO 在数据库中关联查询该用户的权限集合
+        //在数据库中关联查询该用户的权限集合
         perms=userMapper.queryAllPerms(user.getUserId());
         //对于每一个授权编码进行 , 的解析拆分
         Set<String> stringPermissions= Sets.newHashSet();
