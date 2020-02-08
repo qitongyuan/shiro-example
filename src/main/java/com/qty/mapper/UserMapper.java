@@ -15,4 +15,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     //根据用户ID查询该用户的所有权限
     List<String> queryAllPerms(Long userId);
+
+    List<String>queryAllRoles(Long userId);
 }

@@ -12,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -94,6 +95,7 @@ public class SortController {
     //分页展示分类（分类不分级别）
     @ApiOperation(value="分页展示分类",notes="分页展示分类")
     @RequiresPermissions("sort:manage:list")
+//    @RequiresRoles(value={"管理员"})
     @PostMapping(value = "/manage/list")
     public BaseResponse list(@RequestBody Map<String,Object> params){
         BaseResponse response=new BaseResponse(StatusCode.Success);

@@ -27,7 +27,6 @@ public class JwtRedisUtil {
         SecretKey key=new SecretKeySpec(encodedKey,0,encodedKey.length,"AES");
         return key;
     }
-
     //创建token
     public static String createJWT(final String id, final User subject){
         //定义生成签名的算法
@@ -49,12 +48,11 @@ public class JwtRedisUtil {
                 //签发时指定 加密算法、密钥
                 .signWith(algorithm,key);
 
-        //设定过期时间
-//        if (expireMills>=0){
+        //设定过期时间（使用redis的情况下不需要设定过期时间，Token串依靠redis过期）
+//      if (expireMills>=0){
 //            Long realExpire=System.currentTimeMillis() + expireMills;
 //            builder.setExpiration(new Date(realExpire));
 //        }
-
         //生成access token
         return builder.compact();
     }

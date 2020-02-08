@@ -10,4 +10,9 @@
 		where ur.user_id = #{userId}
     </select>
 
+	<select id="queryAllRoles" resultType="string">
+		SELECT r.role_name from tb_user_role ur
+			LEFT JOIN tb_role r ON r.role_id=ur.role_id
+	</select>
+
 </mapper>

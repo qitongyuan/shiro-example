@@ -68,7 +68,9 @@ public class MyRealm extends AuthorizingRealm {
         String accessToken=(String)principals.getPrimaryPrincipal();
         User user=new ShiroUtil().getUserInfo(accessToken);
         //查询权限集合赋给shiro
+        List<String>roles=Lists.newLinkedList();
         List<String>perms= Lists.newLinkedList();
+        roles=userMapper.queryAllRoles(user.getUserId());
         //在数据库中关联查询该用户的权限集合
         perms=userMapper.queryAllPerms(user.getUserId());
         //对于每一个授权编码进行 , 的解析拆分
@@ -81,7 +83,12 @@ public class MyRealm extends AuthorizingRealm {
             }
         }
         SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
-        info.setStringPermissions(stringPermissions);
+        for (String role:roles) {
+            //赋予角色
+            info.addRole(role);
+        }
+        //赋予资源
+        info.addStringPermissions(stringPermissions);
         return info;
     }
 
